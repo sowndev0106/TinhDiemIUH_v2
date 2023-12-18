@@ -16,8 +16,10 @@
                 "https://sv.iuh.edu.vn/ket-qua-hoc-tap.html"
             ],
             "js": [
-                "js/addColumnCreditPractical.js",
                 "js/util.js",
+                "js/addColumnCreditPractical.js",
+                "js/getGradesAndAssignIdAndInput.js",
+                "js/eventHandler.js",
                 "js/index.js"
             ]
         }

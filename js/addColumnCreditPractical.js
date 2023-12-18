@@ -33,6 +33,12 @@ const addColumnCreditPracticalInBody = () => {
         const tdFirst = tr.querySelector('td:first-child');
         // check colspan exist
         if (!tdFirst || tdFirst?.hasAttribute('colspan')) {
+            const td = tr.querySelector('td[colspan="28"]');
+            td.setAttribute('colspan', 29);
+
+            const td2 = tr.querySelectorAll('td[colspan="2"]');
+            td2[1]?.setAttribute('colspan', 3);
+
             return
         }
         const allTd = tr.querySelectorAll('td');
@@ -44,7 +50,7 @@ const addColumnCreditPracticalInBody = () => {
         // must be -1 because missing column tdCreditPractical (add not yet)
         const midTerm = allTd[columnName.midTerm - 1].textContent;
         const theorys = [...allTd].slice(columnName.theory1 - 1, columnName.theory9 - 1).map(td => td.textContent);
-        const practicals = [...allTd].slice(columnName.practice1 - 1, columnName.practice5 - 1).map(td => td.textContent);
+        const practicals = [...allTd].slice(columnName.practical1 - 1, columnName.practical5 - 1).map(td => td.textContent);
         const endTerm = allTd[columnName.endTerm - 1].textContent;
         const finalGrade10 = allTd[columnName.finalGrade10 - 1].textContent;
 
@@ -56,7 +62,6 @@ const addColumnCreditPracticalInBody = () => {
 }
 
 const findPraticalCredit = (totalCredit, midTerm, theorys, practicals, endTerm, finalGrade10) => {
-
     try {
         // avg array number theorys
         endTerm = convertGradeToNumber(endTerm);
@@ -83,9 +88,10 @@ const findPraticalCredit = (totalCredit, midTerm, theorys, practicals, endTerm, 
         for (let creditPractical = 1; creditPractical <= totalCredit; creditPractical++) {
             const creditTheory = totalCredit - creditPractical;
             const grade = (gradeTheory * creditTheory + creditPractical * gradePractical) / totalCredit;
-            console.log({ grade: grade.toFixed(2), finalGrade10 })
+            if (grade.toFixed(1) == finalGrade10) {
+                return creditPractical
+            }
         }
-        console.log("--------------------------------------------")
         return 1
 
     } catch (error) {
@@ -94,9 +100,3 @@ const findPraticalCredit = (totalCredit, midTerm, theorys, practicals, endTerm, 
 }
 
 
-const filterColumTheoryOrPracticals = (arrays) => {
-    return arrays.filter(e => e != "").map(e => convertGradeToNumber(e));
-}
-const convertGradeToNumber = (grade) => {
-    return Number(grade.replace(',', '.'));
-}

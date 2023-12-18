@@ -15,16 +15,88 @@ const columnName = {
     theory7: 13,
     theory8: 14,
     theory9: 15,
-    practice1: 16,
-    practice2: 17,
-    practice3: 18,
-    practice4: 19,
-    practice5: 20,
-    tbqt: 21,
-    endTerm: 22,
-    finalGrade10: 23,
-    finalGrade4: 24,
-    finalGradeChar: 25,
-    level: 26,
-    description: 27
+    practical1: 16,
+    practical2: 17,
+    practical3: 18,
+    practical4: 19,
+    practical5: 20,
+    endTerm: 21,
+    finalGrade10: 22,
+    finalGrade4: 23,
+    finalGradeChar: 24,
+    level: 25,
+    description: 26
+}
+var listNameSubjectExceptions = [
+    "Giáo dục Quốc phòng và an ninh 1",
+    "Giáo dục Quốc phòng và an ninh 2",
+    "Giáo dục thể chất 1",
+    "Giáo dục thể chất 2",
+    "Tiếng Anh 2",
+    "Tiếng Anh 1",
+];
+const convertGradeToNumber = (grade) => {
+    if (!grade) return NaN
+    return Number(grade.trim().replace(',', '.'));
+}
+const filterColumTheoryOrPracticals = (arrays) => {
+    return arrays.filter(e => e != "").map(e => convertGradeToNumber(e));
+}
+
+function checkGradeValidation(e) {
+    if (!e) {
+        return false;
+    }
+    const target = e.target;
+
+    const value = e.target.value.trim();
+    if (value == "") {
+        target.style.color = "#667580";
+        target.style.backgroundColor = "white";
+        return true;
+    }
+
+    if (
+        !/^[0-9,.]+$/.test(value) ||
+        parseFloat(value) < 0 ||
+        parseFloat(value) > 10
+    ) {
+        target.style.backgroundColor = " #d42626";
+        target.style.color = "white";
+        return false;
+    }
+
+    if (convertGradeToNumber(value) <= 5) {
+        target.style.color = "red";
+    } else {
+        target.style.color = "#667580";
+    }
+
+    target.style.backgroundColor = "white";
+
+    return true;
+}
+
+function checkCreditValidation(e, maxCredit) {
+    if (!e) {
+        return false;
+    }
+    const target = e.target;
+    const value = e.target.value.trim();
+
+    if (value == "") {
+        target.style.color = "#667580";
+        target.style.backgroundColor = "white";
+        return true;
+    }
+
+    if (
+        !/^[0-9]+$/.test(value) ||
+        convertGradeToNumber(value) < 0 ||
+        convertGradeToNumber(value) >= maxCredit
+    ) {
+        target.style.backgroundColor = " #d42626";
+        target.style.color = "white";
+        return false;
+    }
 }
