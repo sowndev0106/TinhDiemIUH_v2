@@ -2,7 +2,7 @@ const columnName = {
     index: 0,
     idClass: 1,
     name: 2,
-    sumCredit: 3,
+    totalCredit: 3,
     creditPractical: 4,
     midTerm: 5,
     diligence: 6,
@@ -37,10 +37,19 @@ var listNameSubjectExceptions = [
 ];
 const convertGradeToNumber = (grade) => {
     if (!grade) return NaN
-    return Number(grade.trim().replace(',', '.'));
+    return Number(String(grade).trim().replace(',', '.'));
+}
+
+const convertGradeToNumberView = (grade) => {
+    if (!grade) return ""
+    return String(Number(grade).toFixed(2)).trim().replace('.', ',');
 }
 const filterColumTheoryOrPracticals = (arrays) => {
-    return arrays.filter(e => e != "").map(e => convertGradeToNumber(e));
+    return arrays.filter(e => {
+        if (e != "" && !isNaN(e))
+            return true
+        return false
+    }).map(e => convertGradeToNumber(e));
 }
 
 function checkGradeValidation(e) {
@@ -99,4 +108,131 @@ function checkCreditValidation(e, maxCredit) {
         target.style.color = "white";
         return false;
     }
+}
+
+const endTermCalculator = (totalCredit, creditPractical, midTerm, endTerm, theorys, practicals) => {
+
+    endTerm = convertGradeToNumber(endTerm);
+    creditPractical = convertGradeToNumber(creditPractical);
+    totalCredit = convertGradeToNumber(totalCredit);
+    midTerm = convertGradeToNumber(midTerm);
+    theorys = filterColumTheoryOrPracticals(theorys);
+    practicals = filterColumTheoryOrPracticals(practicals);
+
+    console.log({ totalCredit, creditPractical, midTerm, endTerm, theorys, practicals })
+    if (this.endterm === -1) {
+        return undefined;
+    }
+    if (this.endterm < 3) {
+        return 0;
+    }
+    const gradeTheory = calculatorTheory(theorys, midTerm, endTerm)
+
+    if (!practicals || practicals.length == 0) {
+        return gradeTheory.toFixed(1)
+    }
+
+    // subject have practicals grade
+    const creditTheory = totalCredit - creditPractical;
+    const gradeSubject10 = calculatorPractical(practicals, creditPractical, gradeTheory, creditTheory)
+
+    return gradeSubject10.toFixed(1)
+
+}
+const calculatorPractical = (practicals, creditPractical, gradeTheory, creditTheory) => {
+    let gradePractical =
+        practicals.reduce((a, b) => a + b) / practicals.length;
+    const totalCredit = creditTheory + creditPractical
+    const gradeSubject10 =
+        Math.round(((gradeTheory * creditTheory + gradePractical * creditPractical) / totalCredit));
+
+    return gradeSubject10;
+}
+
+const calculatorTheory = (theorys, midTerm, endTerm) => {
+    if (theorys.length == 0) {
+        if (!midTerm) {
+            return endTerm;
+        }
+        return endTerm * 0.5 + midTerm * 0.4;
+    }
+    let total = theorys.reduce((a, b) => a + b) / theorys.length;
+    return total * 0.2 + midTerm * 0.3 + endTerm * 0.5;
+
+}
+
+
+function convertGrade10(result) {
+    var score;
+    if (result >= 9) {
+        return (score = {
+            finalGrade10: result,
+            finalGrade4: 4.0,
+            finalGradeChar: "A+",
+            level: "Xuất sắc"
+        });
+    }
+    if (result >= 8.5) {
+        return (score = {
+            finalGrade10: result,
+            finalGrade4: 3.8,
+            finalGradeChar: "A",
+            level: "Giỏi"
+        });
+    }
+    if (result >= 8.0) {
+        return (score = {
+            finalGrade10: result,
+            finalGrade4: 3.5,
+            finalGradeChar: "B+",
+            level: "Khá"
+        });
+    }
+    if (result >= 7.0) {
+        return (score = {
+            finalGrade10: result,
+            finalGrade4: 3.0,
+            finalGradeChar: "B",
+            level: "Khá"
+        });
+    }
+    if (result >= 6.0) {
+        return (score = {
+            finalGrade10: result,
+            finalGrade4: 2.5,
+            finalGradeChar: "C+",
+            level: "Trung bình"
+        });
+    }
+    if (result >= 5.5) {
+        return (score = {
+            finalGrade10: result,
+            finalGrade4: 2.0,
+            finalGradeChar: "C",
+            level: "Trung Binh"
+        });
+    }
+    if (result >= 5.0) {
+        return (score = {
+            finalGrade10: result,
+            finalGrade4: 1.5,
+            finalGradeChar: "D+",
+            level: "Trung Bình yếu"
+        });
+    }
+    if (result >= 4.0) {
+        return (score = {
+            finalGrade10: result,
+            finalGrade4: 1.0,
+            finalGradeChar: "D",
+            level: "Trung bình yếu"
+        });
+    }
+    // Rot mon
+    return (score = {
+        finalGrade10: result,
+        finalGrade4: 0,
+        finalGradeChar: "F",
+        level: "Kém"
+    });
 }

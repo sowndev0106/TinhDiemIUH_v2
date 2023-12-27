@@ -34,6 +34,7 @@ const getGradesAndAssignIdAndInput = () => {
                 term,
                 subjects,
                 overview,
+                termId
             })
             term = '';
             subjects = [];
@@ -80,7 +81,7 @@ const assignKeyAndInputInRow = (tr, rowIndex, termId) => {
         index: convertGradeToNumber(tds[0].innerText),
         idSubject: convertGradeToNumber(tds[1].innerText),
         name: tds[2].innerText,
-        sumCredit: convertGradeToNumber(tds[3].innerText),
+        totalCredit: convertGradeToNumber(tds[3].innerText),
         creditPractical: convertGradeToNumber(tds[4].innerText) || 0,
         midTerm: convertGradeToNumber(tds[5].innerText),
         diligence: tds[6].innerText,
@@ -112,7 +113,7 @@ const assignKeyAndInputInRow = (tr, rowIndex, termId) => {
     assignKeyAndInputToSignleRow(tds[0], termId, rowIndex, 0, 'index', true);
     assignKeyAndInputToSignleRow(tds[1], termId, rowIndex, 1, 'idSubject', true);
     assignKeyAndInputToSignleRow(tds[2], termId, rowIndex, 2, 'name', true);
-    assignKeyAndInputToSignleRow(tds[3], termId, rowIndex, 3, 'sumCredit', true);
+    assignKeyAndInputToSignleRow(tds[3], termId, rowIndex, 3, 'totalCredit', true);
     assignKeyAndInputToSignleRow(tds[4], termId, rowIndex, 4, 'creditPractical', false);
     assignKeyAndInputToSignleRow(tds[5], termId, rowIndex, 5, 'midTerm', false);
     assignKeyAndInputToSignleRow(tds[6], termId, rowIndex, 6, 'diligence', true);
@@ -166,10 +167,10 @@ const getOverviewsAndAsignKey = (tr, termId) => {
     const [avgAccumulator10, avgAccumulator4] = getOneRowOverviewAndAsignKey(tr, termId, 'avgAccumulator10', 'avgAccumulator4', true);
 
     tr = tr.nextElementSibling;
-    const [sumCreditRegister, sumCreditAccumulation] = getOneRowOverviewAndAsignKey(tr, termId, 'sumCreditRegister', 'sumCreditAccumulation', true);
+    const [totalCreditRegister, totalCreditAccumulation] = getOneRowOverviewAndAsignKey(tr, termId, 'totalCreditRegister', 'totalCreditAccumulation', true);
 
     tr = tr.nextElementSibling;
-    const [sumCreditPass, sumCreditFail] = getOneRowOverviewAndAsignKey(tr, termId, 'sumCreditPass', 'sumCreditFail', true);
+    const [totalCreditPass, totalCreditFail] = getOneRowOverviewAndAsignKey(tr, termId, 'totalCreditPass', 'totalCreditFail', true);
 
     tr = tr.nextElementSibling;
     const [levelAccumulation, levelTerm] = getOneRowOverviewAndAsignKey(tr, termId, 'levelAccumulation', 'levelTerm', false);
@@ -180,10 +181,10 @@ const getOverviewsAndAsignKey = (tr, termId) => {
         avg4,
         avgAccumulator10,
         avgAccumulator4,
-        sumCreditRegister,
-        sumCreditAccumulation,
-        sumCreditPass,
-        sumCreditFail,
+        totalCreditRegister,
+        totalCreditAccumulation,
+        totalCreditPass,
+        totalCreditFail,
         levelAccumulation,
         levelTerm,
     }
@@ -197,7 +198,7 @@ const getOverviewsAndAsignKey = (tr, termId) => {
 //                 index: 0,
 //                 idClass: 1,
 //                 name: 2,
-//                 sumCredit: 3,
+//                 totalCredit: 3,
 //                 creditPractical: 4,
 //                 midTerm: 5,
 //                 diligence: 6,
@@ -230,10 +231,10 @@ const getOverviewsAndAsignKey = (tr, termId) => {
 //             avg4: number;
 //             avgAccumulator10: number;
 //             avgAccumulator4: number;
-//             sumCreditRegister: number;
-//             sumCreditAccumulation: number;
-//             sumCreditPass: number;
-//             sumCreditFail: number;
+//             totalCreditRegister: number;
+//             totalCreditAccumulation: number;
+//             totalCreditPass: number;
+//             totalCreditFail: number;
 //             levelAccumulation: String;
 //             levelTerm: String;
 //         }

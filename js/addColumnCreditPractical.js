@@ -42,10 +42,10 @@ const addColumnCreditPracticalInBody = () => {
             return
         }
         const allTd = tr.querySelectorAll('td');
-        const tdSumCredit = allTd[columnName.sumCredit]
-        const tdCreditPractical = tdSumCredit.cloneNode(true);
+        const tdtotalCredit = allTd[columnName.totalCredit]
+        const tdCreditPractical = tdtotalCredit.cloneNode(true);
 
-        const credit = tdSumCredit.textContent;
+        const credit = tdtotalCredit.textContent;
 
         // must be -1 because missing column tdCreditPractical (add not yet)
         const midTerm = allTd[columnName.midTerm - 1].textContent;
@@ -57,7 +57,7 @@ const addColumnCreditPracticalInBody = () => {
         const creditPractical = findPraticalCredit(credit, midTerm, theorys, practicals, endTerm, finalGrade10);
 
         tdCreditPractical.innerHTML = `<div style="display: inline-table">${creditPractical}</div>`;
-        tdSumCredit.insertAdjacentElement('afterend', tdCreditPractical);
+        tdtotalCredit.insertAdjacentElement('afterend', tdCreditPractical);
     })
 }
 
@@ -98,5 +98,7 @@ const findPraticalCredit = (totalCredit, midTerm, theorys, practicals, endTerm, 
         return ""
     }
 }
+
+
 
 
