@@ -62,9 +62,13 @@ const handlerUpdateGrade = (event) => {
 }
 const calculatorOverviewTerm = (termId) => {
     const term = grades.find(term => term.termId == termId);
-
+    let isMissing = false
     const overviewTerm = term.subjects.reduce((overviewTerm, subject) => {
         if (subject.disable) {
+            return overviewTerm
+        }
+        if (subject.finalGrade10 == "" || subject.finalGrade10 == undefined || isNaN(subject.finalGrade10)) {
+            isMissing = true
             return overviewTerm
         }
         overviewTerm.totalCredit += subject.totalCredit
@@ -76,6 +80,10 @@ const calculatorOverviewTerm = (termId) => {
         totalGrade10: 0,
         totalGrade4: 0,
     })
+    if (isMissing) {
+        // stop calculator
+        return
+    }
 
     overviewTerm.finalGrade10 = (overviewTerm.totalGrade10 / overviewTerm.totalCredit).toFixed(1)
     overviewTerm.finalGrade4 = (overviewTerm.totalGrade4 / overviewTerm.totalCredit).toFixed(2)
@@ -109,4 +117,17 @@ const updateOverviewTermInView = (termId) => {
     spanAvg4.innerText = convertGradeToNumberView(term.overview.avg4)
     spanAvg10.innerText = convertGradeToNumberView(term.overview.avg10)
     spanLevelTerm.innerText = term.overview.levelTerm
+}
+const updateOverviewFromTerm = (termId) => {
+    const indexTerm = grades.findIndex(term => term.termId == termId);
+    const lengthTerm = grades.length;
+    if (indexTerm == -1 || indexTerm == lengthTerm - 1) return
+
+    for (let i = indexTerm; i < lengthTerm; i++) {
+        const term = grades[indexTerm];
+        const nextTerm = grades[indexTerm + 1];
+
+
+    }
+
 }
