@@ -31,7 +31,9 @@ const handlerUpdateGrade = (event) => {
     }
     // add new value into grade
     const term = grades.find(term => term.termId == termId);
+
     if (!term) return alert("Không thể tín điểm")
+
     const subject = term.subjects.find(subject => subject.rowIndex == row);
     subject[columnName] = value
 
@@ -51,25 +53,60 @@ const handlerUpdateGrade = (event) => {
     subject.finalGrade4 = overviewSubject.finalGrade4
     subject.finalGradeChar = overviewSubject.finalGradeChar
     subject.level = overviewSubject.level
-    console.log({ overviewSubject })
+
     updateOverviewSubjectInView(termId, row, subject)
+
+    calculatorOverviewTerm(termId)
+
+    updateOverviewTermInView(termId)
+}
+const calculatorOverviewTerm = (termId) => {
+    const term = grades.find(term => term.termId == termId);
+
+    const overviewTerm = term.subjects.reduce((overviewTerm, subject) => {
+        if (subject.disable) {
+            return overviewTerm
+        }
+        overviewTerm.totalCredit += subject.totalCredit
+        overviewTerm.totalGrade10 += subject.finalGrade10 * subject.totalCredit
+        overviewTerm.totalGrade4 += subject.finalGrade4 * subject.totalCredit
+        return overviewTerm
+    }, {
+        totalCredit: 0,
+        totalGrade10: 0,
+        totalGrade4: 0,
+    })
+
+    overviewTerm.finalGrade10 = (overviewTerm.totalGrade10 / overviewTerm.totalCredit).toFixed(1)
+    overviewTerm.finalGrade4 = (overviewTerm.totalGrade4 / overviewTerm.totalCredit).toFixed(2)
+    overviewTerm.level = findOverTermLevelByGrade4(overviewTerm.finalGrade4)
+
+    term.overview.avg4 = overviewTerm.finalGrade4
+    term.overview.avg10 = overviewTerm.finalGrade10
+    term.overview.levelTerm = overviewTerm.level
+
+    updateOverviewTermInView(termId)
 }
 const updateOverviewSubjectInView = (termId, rowId, subject) => {
-    console.log({ termId, rowId, subject })
     const inputFinalGrade10 = document.getElementById(`input-${termId}-${rowId}-${columnName.finalGrade10}`)
     const inputFinalGrade4 = document.getElementById(`input-${termId}-${rowId}-${columnName.finalGrade4}`)
     const inputFinalGradeChar = document.getElementById(`input-${termId}-${rowId}-${columnName.finalGradeChar}`)
     const inputLevel = document.getElementById(`input-${termId}-${rowId}-${columnName.level}`)
 
-    console.log({ inputFinalGrade10, inputFinalGrade4, inputFinalGradeChar, inputLevel })
-
     inputFinalGrade10.value = convertGradeToNumberView(subject.finalGrade10)
     inputFinalGrade4.value = convertGradeToNumberView(subject.finalGrade4)
     inputFinalGradeChar.value = subject.finalGradeChar
     inputLevel.value = subject.level
-
 }
 
 const updateOverviewTermInView = (termId) => {
+    const spanAvg4 = document.getElementById(`span-${termId}-avg4`)
+    const spanAvg10 = document.getElementById(`span-${termId}-avg10`)
+    const spanLevelTerm = document.getElementById(`span-${termId}-levelTerm`)
 
+    const term = grades.find(term => term.termId == termId);
+
+    spanAvg4.innerText = convertGradeToNumberView(term.overview.avg4)
+    spanAvg10.innerText = convertGradeToNumberView(term.overview.avg10)
+    spanLevelTerm.innerText = term.overview.levelTerm
 }

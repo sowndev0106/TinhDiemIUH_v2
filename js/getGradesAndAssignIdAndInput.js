@@ -48,7 +48,6 @@ const getGradesAndAssignIdAndInput = () => {
         subjects.push(subject);
 
     }
-    console.log(grades)
     return grades
 }
 

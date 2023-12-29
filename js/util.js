@@ -41,12 +41,12 @@ const convertGradeToNumber = (grade) => {
 }
 
 const convertGradeToNumberView = (grade) => {
-    if (!grade) return ""
+    if (grade == undefined || isNaN(grade)) return ""
     return String(Number(grade).toFixed(2)).trim().replace('.', ',');
 }
 const filterColumTheoryOrPracticals = (arrays) => {
     return arrays.filter(e => {
-        if (e != "" && !isNaN(e))
+        if (e != "" && !isNaN(convertGradeToNumber(e)))
             return true
         return false
     }).map(e => convertGradeToNumber(e));
@@ -119,7 +119,6 @@ const endTermCalculator = (totalCredit, creditPractical, midTerm, endTerm, theor
     theorys = filterColumTheoryOrPracticals(theorys);
     practicals = filterColumTheoryOrPracticals(practicals);
 
-    console.log({ totalCredit, creditPractical, midTerm, endTerm, theorys, practicals })
     if (this.endterm === -1) {
         return undefined;
     }
@@ -235,4 +234,18 @@ function convertGrade10(result) {
         finalGradeChar: "F",
         level: "Kém"
     });
+}
+
+function findOverTermLevelByGrade4(grade4) {
+    if (grade4 >= 3.6)
+        return 'Xuất sắc';
+    if (grade4 >= 3.2)
+        return 'Giỏi';
+    if (grade4 >= 2.5)
+        return 'Khá';
+    if (grade4 >= 2)
+        return 'Trung bình';
+    if (grade4 >= 1)
+        return 'Trung bình yếu';
+    return 'Kém';
 }

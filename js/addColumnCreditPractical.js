@@ -55,7 +55,6 @@ const addColumnCreditPracticalInBody = () => {
         const finalGrade10 = allTd[columnName.finalGrade10 - 1].textContent;
 
         const creditPractical = findPraticalCredit(credit, midTerm, theorys, practicals, endTerm, finalGrade10);
-
         tdCreditPractical.innerHTML = `<div style="display: inline-table">${creditPractical}</div>`;
         tdtotalCredit.insertAdjacentElement('afterend', tdCreditPractical);
     })
@@ -70,6 +69,7 @@ const findPraticalCredit = (totalCredit, midTerm, theorys, practicals, endTerm, 
         midTerm = convertGradeToNumber(midTerm);
         theorys = filterColumTheoryOrPracticals(theorys);
         practicals = filterColumTheoryOrPracticals(practicals);
+
 
         if (!theorys || theorys.length == 0 || !practicals || practicals.length == 0 || !midTerm || !endTerm || !finalGrade10 || !totalCredit) {
             throw new Error()
