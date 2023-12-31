@@ -28,13 +28,18 @@ const getGradesAndAssignIdAndInput = () => {
 
             //  is overview final
             const overview = getOverviewsAndAsignKey(tr, termId);
+            let totalCredit = subjects.reduce((total, subject) => subject.disable ? total : total + subject.totalCredit, 0);
+            let totalCreditAccumulator = grades[grades.length - 1] ? grades[grades.length - 1].totalCreditAccumulator + totalCredit : totalCredit;
+
             grades.push({
                 startRowIndex,
                 endRowIndex: i - 1,
                 term,
                 subjects,
                 overview,
-                termId
+                termId,
+                totalCredit,
+                totalCreditAccumulator
             })
             term = '';
             subjects = [];
@@ -166,13 +171,13 @@ const getOverviewsAndAsignKey = (tr, termId) => {
     const [avgAccumulator10, avgAccumulator4] = getOneRowOverviewAndAsignKey(tr, termId, 'avgAccumulator10', 'avgAccumulator4', true);
 
     tr = tr.nextElementSibling;
-    const [totalCreditRegister, totalCreditAccumulation] = getOneRowOverviewAndAsignKey(tr, termId, 'totalCreditRegister', 'totalCreditAccumulation', true);
+    const [totalCreditRegister, totalCreditAccumulator] = getOneRowOverviewAndAsignKey(tr, termId, 'totalCreditRegister', 'totalCreditAccumulator', true);
 
     tr = tr.nextElementSibling;
     const [totalCreditPass, totalCreditFail] = getOneRowOverviewAndAsignKey(tr, termId, 'totalCreditPass', 'totalCreditFail', true);
 
     tr = tr.nextElementSibling;
-    const [levelAccumulation, levelTerm] = getOneRowOverviewAndAsignKey(tr, termId, 'levelAccumulation', 'levelTerm', false);
+    const [levelAccumulator, levelTerm] = getOneRowOverviewAndAsignKey(tr, termId, 'levelAccumulator', 'levelTerm', false);
 
 
     return {
@@ -181,10 +186,10 @@ const getOverviewsAndAsignKey = (tr, termId) => {
         avgAccumulator10,
         avgAccumulator4,
         totalCreditRegister,
-        totalCreditAccumulation,
+        totalCreditAccumulator,
         totalCreditPass,
         totalCreditFail,
-        levelAccumulation,
+        levelAccumulator,
         levelTerm,
     }
 }
@@ -231,10 +236,10 @@ const getOverviewsAndAsignKey = (tr, termId) => {
 //             avgAccumulator10: number;
 //             avgAccumulator4: number;
 //             totalCreditRegister: number;
-//             totalCreditAccumulation: number;
+//             totalCreditAccumulator: number;
 //             totalCreditPass: number;
 //             totalCreditFail: number;
-//             levelAccumulation: String;
+//             levelAccumulator: String;
 //             levelTerm: String;
 //         }
 // }

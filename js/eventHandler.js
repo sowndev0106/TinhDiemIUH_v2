@@ -85,15 +85,24 @@ const calculatorOverviewTerm = (termId) => {
         return
     }
 
-    overviewTerm.finalGrade10 = (overviewTerm.totalGrade10 / overviewTerm.totalCredit).toFixed(1)
-    overviewTerm.finalGrade4 = (overviewTerm.totalGrade4 / overviewTerm.totalCredit).toFixed(2)
+    overviewTerm.finalGrade10 = Number((overviewTerm.totalGrade10 / overviewTerm.totalCredit).toFixed(1))
+    overviewTerm.finalGrade4 = Number((overviewTerm.totalGrade4 / overviewTerm.totalCredit).toFixed(2))
     overviewTerm.level = findOverTermLevelByGrade4(overviewTerm.finalGrade4)
 
     term.overview.avg4 = overviewTerm.finalGrade4
     term.overview.avg10 = overviewTerm.finalGrade10
     term.overview.levelTerm = overviewTerm.level
 
+    if (termId == 0) {
+        term.overview.avgAccumulator4 = overviewTerm.finalGrade4
+        term.overview.avgAccumulator10 = overviewTerm.finalGrade10
+        term.overview.levelAccumulator = overviewTerm.level
+    }
+
     updateOverviewTermInView(termId)
+
+    // update all term after this term
+    updateOverviewFromTerm(termId)
 }
 const updateOverviewSubjectInView = (termId, rowId, subject) => {
     const inputFinalGrade10 = document.getElementById(`input-${termId}-${rowId}-${columnName.finalGrade10}`)
@@ -111,23 +120,40 @@ const updateOverviewTermInView = (termId) => {
     const spanAvg4 = document.getElementById(`span-${termId}-avg4`)
     const spanAvg10 = document.getElementById(`span-${termId}-avg10`)
     const spanLevelTerm = document.getElementById(`span-${termId}-levelTerm`)
+    const spanAvgAccumulator4 = document.getElementById(`span-${termId}-avgAccumulator4`)
+    const spanAvgAccumulator10 = document.getElementById(`span-${termId}-avgAccumulator10`)
+    const spanLevelAccumulator = document.getElementById(`span-${termId}-levelAccumulator`)
 
     const term = grades.find(term => term.termId == termId);
 
-    spanAvg4.innerText = convertGradeToNumberView(term.overview.avg4)
-    spanAvg10.innerText = convertGradeToNumberView(term.overview.avg10)
-    spanLevelTerm.innerText = term.overview.levelTerm
+    spanAvg4.innerText = " " + convertGradeToNumberView(term.overview.avg4)
+    spanAvg10.innerText = " " + convertGradeToNumberView(term.overview.avg10)
+    spanLevelTerm.innerText = " " + term.overview.levelTerm
+
+    spanAvgAccumulator4.innerText = " " + convertGradeToNumberView(term.overview.avgAccumulator4)
+    spanAvgAccumulator10.innerText = " " + convertGradeToNumberView(term.overview.avgAccumulator10)
+    spanLevelAccumulator.innerText = " " + term.overview.levelAccumulator
+
 }
 const updateOverviewFromTerm = (termId) => {
     const indexTerm = grades.findIndex(term => term.termId == termId);
     const lengthTerm = grades.length;
     if (indexTerm == -1 || indexTerm == lengthTerm - 1) return
-
+    console.log("updateOverviewFromTerm", indexTerm, lengthTerm)
     for (let i = indexTerm; i < lengthTerm; i++) {
-        const term = grades[indexTerm];
-        const nextTerm = grades[indexTerm + 1];
+        const prevertTerm = grades[i - 1];
+        const term = grades[i];
+        if (!prevertTerm) continue
 
 
+        const avgAccumulator4 = (term.overview.avg4 * term.totalCredit + prevertTerm.overview.avgAccumulator4 * prevertTerm.totalCreditAccumulator) / (term.totalCredit + prevertTerm.totalCreditAccumulator)
+        const avgAccumulator10 = (term.overview.avg10 * term.totalCredit + prevertTerm.overview.avgAccumulator10 * prevertTerm.totalCreditAccumulator) / (term.totalCredit + prevertTerm.totalCreditAccumulator)
+        const levelAccumulator = findOverTermLevelByGrade4(term.overview.avgAccumulator4)
+
+        term.overview.avgAccumulator4 = Number(avgAccumulator4.toFixed(2))
+        term.overview.avgAccumulator10 = Number(avgAccumulator10.toFixed(1))
+        term.overview.levelAccumulator = levelAccumulator
+        updateOverviewTermInView(term.termId)
     }
 
 }
