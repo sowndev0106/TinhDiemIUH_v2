@@ -1,11 +1,21 @@
 'use strict';
 // add toggle enable or disable caculator grade
-addToggleButton()
 
-addColumnCreditPractical()
+// check status tool tinhDiem 
+let grades = [];
+(async () => {
+    const status = localStorage.getItem("statusToolTinhDiem");
+    const isEnable = (status == true || status == "true" || status == null || status == undefined)
 
-const grades = getGradesAndAssignIdAndInput()
+    addToggleButton(isEnable);
 
-addEventToGrade()
+    if (isEnable) {
+        addColumnCreditPractical()
 
-console.log(grades)
+        grades = getGradesAndAssignIdAndInput()
+
+        addEventToGrade()
+
+        console.log(grades)
+    }
+})()
