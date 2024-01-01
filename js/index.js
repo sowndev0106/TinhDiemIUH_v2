@@ -1,4 +1,6 @@
 'use strict';
+// add toggle enable or disable caculator grade
+addToggleButton()
 
 addColumnCreditPractical()
 

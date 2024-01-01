@@ -14,17 +14,18 @@ const handlerUpdateGrade = (event) => {
     const termId = event.target.getAttribute('termId');
     const column = event.target.getAttribute('column');
     const id = event.target.getAttribute('id');
-    const columnName = event.target.getAttribute('columnname');
+    const columnNameValue = event.target.getAttribute('columnname');
     const value = event.target.value;
 
     if (isCreditInput) {
         // column credit
         const columntotalCredit = columnName.totalCredit;
         const inputtotalCredit = document.getElementById(`input-${termId}-${row}-${columntotalCredit}`);
-
+        console.log({ inputtotalCredit, text: `input-${termId}-${row}-${columntotalCredit}` })
         validate = checkCreditValidation(event, convertGradeToNumber(inputtotalCredit?.value) || 10)
     } else
         validate = checkGradeValidation(event)
+
 
     if (!validate || value == "") {
         return
@@ -35,7 +36,7 @@ const handlerUpdateGrade = (event) => {
     if (!term) return alert("Không thể tín điểm")
 
     const subject = term.subjects.find(subject => subject.rowIndex == row);
-    subject[columnName] = value
+    subject[columnNameValue] = value
 
     const finalGrade10 = endTermCalculator(
         subject.totalCredit,
@@ -56,64 +57,32 @@ const handlerUpdateGrade = (event) => {
 
     updateOverviewSubjectInView(termId, row, subject)
 
-    calculatorOverviewTerm(termId)
-
-    updateOverviewTermInView(termId)
-}
-const calculatorOverviewTerm = (termId) => {
-    const term = grades.find(term => term.termId == termId);
-    let isMissing = false
-    const overviewTerm = term.subjects.reduce((overviewTerm, subject) => {
-        if (subject.disable) {
-            return overviewTerm
-        }
-        if (subject.finalGrade10 == "" || subject.finalGrade10 == undefined || isNaN(subject.finalGrade10)) {
-            isMissing = true
-            return overviewTerm
-        }
-        overviewTerm.totalCredit += subject.totalCredit
-        overviewTerm.totalGrade10 += subject.finalGrade10 * subject.totalCredit
-        overviewTerm.totalGrade4 += subject.finalGrade4 * subject.totalCredit
-        return overviewTerm
-    }, {
-        totalCredit: 0,
-        totalGrade10: 0,
-        totalGrade4: 0,
-    })
-    if (isMissing) {
-        // stop calculator
-        return
-    }
-
-    overviewTerm.finalGrade10 = Number((overviewTerm.totalGrade10 / overviewTerm.totalCredit).toFixed(1))
-    overviewTerm.finalGrade4 = Number((overviewTerm.totalGrade4 / overviewTerm.totalCredit).toFixed(2))
-    overviewTerm.level = findOverTermLevelByGrade4(overviewTerm.finalGrade4)
-
-    term.overview.avg4 = overviewTerm.finalGrade4
-    term.overview.avg10 = overviewTerm.finalGrade10
-    term.overview.levelTerm = overviewTerm.level
-
-    if (termId == 0) {
-        term.overview.avgAccumulator4 = overviewTerm.finalGrade4
-        term.overview.avgAccumulator10 = overviewTerm.finalGrade10
-        term.overview.levelAccumulator = overviewTerm.level
-    }
+    calculatorOverviewTerm(term)
 
     updateOverviewTermInView(termId)
 
     // update all term after this term
     updateOverviewFromTerm(termId)
 }
+
+
 const updateOverviewSubjectInView = (termId, rowId, subject) => {
     const inputFinalGrade10 = document.getElementById(`input-${termId}-${rowId}-${columnName.finalGrade10}`)
     const inputFinalGrade4 = document.getElementById(`input-${termId}-${rowId}-${columnName.finalGrade4}`)
     const inputFinalGradeChar = document.getElementById(`input-${termId}-${rowId}-${columnName.finalGradeChar}`)
     const inputLevel = document.getElementById(`input-${termId}-${rowId}-${columnName.level}`)
+    const inputdescription = document.getElementById(`input-${termId}-${rowId}-${columnName.description}`)
 
     inputFinalGrade10.value = convertGradeToNumberView(subject.finalGrade10)
     inputFinalGrade4.value = convertGradeToNumberView(subject.finalGrade4)
     inputFinalGradeChar.value = subject.finalGradeChar
     inputLevel.value = subject.level
+
+    if (subject.finalGrade4 == 0) {
+        inputdescription.value = "Rớt môn"
+    } else {
+        inputdescription.value = ""
+    }
 }
 
 const updateOverviewTermInView = (termId) => {
@@ -139,20 +108,37 @@ const updateOverviewFromTerm = (termId) => {
     const indexTerm = grades.findIndex(term => term.termId == termId);
     const lengthTerm = grades.length;
     if (indexTerm == -1 || indexTerm == lengthTerm - 1) return
-    console.log("updateOverviewFromTerm", indexTerm, lengthTerm)
     for (let i = indexTerm; i < lengthTerm; i++) {
         const prevertTerm = grades[i - 1];
         const term = grades[i];
+
+
+        const avg4 = term.subjects.reduce((avg4, subject) => {
+            if (subject.disable) {
+                return avg4
+            }
+            return avg4 + subject.finalGrade4 * subject.totalCredit
+        }, 0) / term.totalCredit
+
+        const avg10 = term.subjects.reduce((avg10, subject) => {
+            if (subject.disable) {
+                return avg10
+            }
+            return avg10 + subject.finalGrade10 * subject.totalCredit
+        }, 0) / term.totalCredit
+
         if (!prevertTerm) continue
 
+        const totalCredit = term.totalCredit + prevertTerm.totalCreditAccumulator
 
-        const avgAccumulator4 = (term.overview.avg4 * term.totalCredit + prevertTerm.overview.avgAccumulator4 * prevertTerm.totalCreditAccumulator) / (term.totalCredit + prevertTerm.totalCreditAccumulator)
-        const avgAccumulator10 = (term.overview.avg10 * term.totalCredit + prevertTerm.overview.avgAccumulator10 * prevertTerm.totalCreditAccumulator) / (term.totalCredit + prevertTerm.totalCreditAccumulator)
+        const avgAccumulator4 = (avg4 * term.totalCredit + prevertTerm.overview.avgAccumulator4 * prevertTerm.totalCreditAccumulator) / totalCredit
+        const avgAccumulator10 = (avg10 * term.totalCredit + prevertTerm.overview.avgAccumulator10 * prevertTerm.totalCreditAccumulator) / totalCredit
         const levelAccumulator = findOverTermLevelByGrade4(term.overview.avgAccumulator4)
 
         term.overview.avgAccumulator4 = Number(avgAccumulator4.toFixed(2))
         term.overview.avgAccumulator10 = Number(avgAccumulator10.toFixed(1))
         term.overview.levelAccumulator = levelAccumulator
+
         updateOverviewTermInView(term.termId)
     }
 

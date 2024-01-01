@@ -41,6 +41,10 @@ const getGradesAndAssignIdAndInput = () => {
                 totalCredit,
                 totalCreditAccumulator
             })
+
+            // calculate overview term again to get grade full
+            calculatorOverviewTerm(grades[grades.length - 1])
+
             term = '';
             subjects = [];
             i = i + 4; // index of tr overview

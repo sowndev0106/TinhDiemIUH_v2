@@ -90,6 +90,7 @@ function checkCreditValidation(e, maxCredit) {
     if (!e) {
         return false;
     }
+
     const target = e.target;
     const value = e.target.value.trim();
 
@@ -108,6 +109,8 @@ function checkCreditValidation(e, maxCredit) {
         target.style.color = "white";
         return false;
     }
+
+    return true;
 }
 
 const endTermCalculator = (totalCredit, creditPractical, midTerm, endTerm, theorys, practicals) => {
@@ -248,4 +251,46 @@ function findOverTermLevelByGrade4(grade4) {
     if (grade4 >= 1)
         return 'Trung bình yếu';
     return 'Kém';
+}
+
+const calculatorOverviewTerm = (term) => {
+
+    let isMissing = false
+    const overviewTerm = term.subjects.reduce((overviewTerm, subject) => {
+        if (subject.disable) {
+            return overviewTerm
+        }
+        if (subject.finalGrade10 == "" || subject.finalGrade10 == undefined || isNaN(subject.finalGrade10)) {
+            isMissing = true
+            return overviewTerm
+        }
+        overviewTerm.totalCredit += subject.totalCredit
+        overviewTerm.totalGrade10 += subject.finalGrade10 * subject.totalCredit
+        overviewTerm.totalGrade4 += subject.finalGrade4 * subject.totalCredit
+        return overviewTerm
+    }, {
+        totalCredit: 0,
+        totalGrade10: 0,
+        totalGrade4: 0,
+    })
+    if (isMissing) {
+        // stop calculator
+        return
+    }
+
+    overviewTerm.finalGrade10 = overviewTerm.totalGrade10 / overviewTerm.totalCredit
+    overviewTerm.finalGrade4 = overviewTerm.totalGrade4 / overviewTerm.totalCredit
+    overviewTerm.level = findOverTermLevelByGrade4(overviewTerm.finalGrade4)
+
+    term.overview.avg4 = overviewTerm.finalGrade4
+    term.overview.avg10 = overviewTerm.finalGrade10
+    term.overview.levelTerm = overviewTerm.level
+
+    if (term.termId == 0) {
+        term.overview.avgAccumulator4 = overviewTerm.finalGrade4
+        term.overview.avgAccumulator10 = overviewTerm.finalGrade10
+        term.overview.levelAccumulator = overviewTerm.level
+    }
+
+    return term
 }

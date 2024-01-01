@@ -17,6 +17,7 @@
             ],
             "js": [
                 "js/util.js",
+                "js/addToggleButton.js",
                 "js/addColumnCreditPractical.js",
                 "js/getGradesAndAssignIdAndInput.js",
                 "js/eventHandler.js",
