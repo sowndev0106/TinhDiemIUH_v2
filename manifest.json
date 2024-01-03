@@ -13,11 +13,13 @@
     "content_scripts": [
         {
             "matches": [
-                "https://sv.iuh.edu.vn/ket-qua-hoc-tap.html"
+                "https://sv.iuh.edu.vn/ket-qua-hoc-tap.html", 
+                "http://127.0.0.1:5500/*"
             ],
             "js": [
                 "js/util.js",
                 "js/addToggleButton.js",
+                "js/addRowsOverview.js",
                 "js/addColumnCreditPractical.js",
                 "js/getGradesAndAssignIdAndInput.js",
                 "js/eventHandler.js",

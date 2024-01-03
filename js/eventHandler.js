@@ -4,8 +4,8 @@ const addEventToGrade = () => {
     const gradesInput = document.querySelectorAll('input.input-grade');
     gradesInput.forEach(gradeInput => {
         gradeInput.addEventListener('keyup', handlerUpdateGrade)
-
     })
+    calculatorOverviewLastTerm()
 }
 const handlerUpdateGrade = (event) => {
     let validate = false
@@ -46,7 +46,9 @@ const handlerUpdateGrade = (event) => {
         [subject.theory1, subject.theory2, subject.theory3, subject.theory4, subject.theory5, subject.theory6, subject.theory7, subject.theory8, subject.theory9],
         [subject.practical1, subject.practical2, subject.practical3, subject.practical4, subject.practical5]
     )
-    if (finalGrade10 == undefined && isNaN(finalGrade10)) return alert("Không thể tín điểm")
+        console.log({finalGrade10})
+        
+    if (finalGrade10 == undefined || isNaN(finalGrade10)) return 
 
     const overviewSubject = convertGrade10(finalGrade10)
 
@@ -63,6 +65,15 @@ const handlerUpdateGrade = (event) => {
 
     // update all term after this term
     updateOverviewFromTerm(termId)
+}
+
+const calculatorOverviewLastTerm = () => {
+    const lastTerm = grades[grades.length - 1];
+    console.log(lastTerm)
+    calculatorOverviewTerm(lastTerm)
+    updateOverviewTermInView(lastTerm.termId)
+    updateOverviewFromTerm(lastTerm.termId)
+
 }
 
 
@@ -107,7 +118,8 @@ const updateOverviewTermInView = (termId) => {
 const updateOverviewFromTerm = (termId) => {
     const indexTerm = grades.findIndex(term => term.termId == termId);
     const lengthTerm = grades.length;
-    if (indexTerm == -1 || indexTerm == lengthTerm - 1) return
+    console.log(grades[indexTerm])
+    if (indexTerm == -1) return
     for (let i = indexTerm; i < lengthTerm; i++) {
         const prevertTerm = grades[i - 1];
         const term = grades[i];
@@ -128,7 +140,6 @@ const updateOverviewFromTerm = (termId) => {
         }, 0) / term.totalCredit
 
         if (!prevertTerm) continue
-
         const totalCredit = term.totalCredit + prevertTerm.totalCreditAccumulator
 
         const avgAccumulator4 = (avg4 * term.totalCredit + prevertTerm.overview.avgAccumulator4 * prevertTerm.totalCreditAccumulator) / totalCredit

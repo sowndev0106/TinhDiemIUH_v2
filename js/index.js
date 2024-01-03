@@ -10,6 +10,8 @@ let grades = [];
     addToggleButton(isEnable);
 
     if (isEnable) {
+        addRowsOverview()
+
         addColumnCreditPractical()
 
         grades = getGradesAndAssignIdAndInput()

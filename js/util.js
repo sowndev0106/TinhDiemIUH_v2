@@ -114,14 +114,14 @@ function checkCreditValidation(e, maxCredit) {
 }
 
 const endTermCalculator = (totalCredit, creditPractical, midTerm, endTerm, theorys, practicals) => {
-
+    console.log({ totalCredit, creditPractical, midTerm, endTerm, theorys, practicals })
     endTerm = convertGradeToNumber(endTerm);
-    creditPractical = convertGradeToNumber(creditPractical);
+    creditPractical = convertGradeToNumber(creditPractical) || 1;
     totalCredit = convertGradeToNumber(totalCredit);
     midTerm = convertGradeToNumber(midTerm);
     theorys = filterColumTheoryOrPracticals(theorys);
     practicals = filterColumTheoryOrPracticals(practicals);
-
+    console.log({ totalCredit, creditPractical, midTerm, endTerm, theorys, practicals })
     if (this.endterm === -1) {
         return undefined;
     }
@@ -138,7 +138,7 @@ const endTermCalculator = (totalCredit, creditPractical, midTerm, endTerm, theor
     const creditTheory = totalCredit - creditPractical;
     const gradeSubject10 = calculatorPractical(practicals, creditPractical, gradeTheory, creditTheory)
 
-    return gradeSubject10.toFixed(1)
+    return gradeSubject10.toFixed(1) 
 
 }
 const calculatorPractical = (practicals, creditPractical, gradeTheory, creditTheory) => {
@@ -275,6 +275,9 @@ const calculatorOverviewTerm = (term) => {
     })
     if (isMissing) {
         // stop calculator
+        term.overview.avg4 = NaN
+        term.overview.avg10 = NaN
+        term.overview.levelTerm = ""
         return
     }
 

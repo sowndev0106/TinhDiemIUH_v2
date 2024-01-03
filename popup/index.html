@@ -24,159 +24,39 @@
 
 <body style="width: 550px">
     <!-- Image and text -->
-    <header>
-        <nav class="navbar navbar-light" style="background-color: #e9ecef">
-            <div class="w-100 d-flex justify-content-between align-items-center">
-                <div>
-                    <a class="navbar-brand" href="#" style="font-family: 'Chakra Petch', sans-serif; color: 578ebe">
-                       
-                        <img src="./logo/logo3.3_128px_noBg.png" width="30" height="30" class="d-inline-block align-top"
-                            alt="" />
-                        Tính điểm IUH
-                    </a>
-                </div>
-                <div class="custom-control custom-switch ">
-                  <div class="d-flex">
-                    <span class="rounded mr-5 d-none" id="msg-on-off" style="color: red;font-weight: 500; font-size: 18px;">
-                        Đã tắt 😔
-                    </span>
-                        <div>
-                            <input type="checkbox" class="custom-control-input" id="status-tool" checked />
-                            <label class="custom-control-label" for="status-tool"></label>
-                        </div>
-                  </div>
-                   
-                </div>
-            </div>
-        </nav>
-
-        <!-- Default checked -->
-    </header>
-    <section id="tabs">
-        <div class="container">
-            <!-- <h6 class="section-title h1">Tabs</h6> -->
-            <!-- <div class="row"> -->
-            <nav>
-                <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-general"
-                        role="tab" aria-controls="nav-general" aria-selected="true">Tổng quan</a>
-                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-guide" role="tab"
-                        aria-controls="nav-profile" aria-selected="false">Hướng dẫn Sử dụng</a>
-                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-order" role="tab"
-                        aria-controls="nav-contact" aria-selected="false">Tiện ích khác</a>
-                    <a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#nav-complaint" role="tab"
-                        aria-controls="nav-about" aria-selected="false">Phản hồi</a>
-                </div>
-            </nav>
-            <div class="tab-content py-3 px-sm-0" id="nav-tabContent">
-
-                <div class="tab-pane fSade show active" id="nav-general" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <!-- char bar -->
-                    <div class="card shadow-sm  mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold color-title">Điểm hệ số 4 qua các học kì
-                            </h6>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body p-3">
-                            <canvas id="barChart"> </canvas>
-                        </div>
-                    </div>
-                    <!-- /char bar -->
-                    <!-- char-pie -->
-                    <div class="card shadow-sm  mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold color-title">Tổng quan về xếp loại của các môn học
-                            </h6>
-                        </div>
-                        <!-- Card Body -->
-                        <div style="  display: flex;">
-                            <div class="card-body p-3" style="position: relative; height:50vh; width:70vw">
-                                <canvas id="pieChart"> </canvas>
-                            </div>
-                            <div class="info-pie-chart pt-3" style="position: relative; height:50vh; width:30vw">
-                                <div class="item-level">
-                                    <div class="color" style="padding-left: 13px;">
-                                        Môn
-                                    </div>
-                                    <div class="info">
-                                        <div class='left'>
-                                            TT
-                                        </div>
-                                        <div class="right">SL</div>
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column " id="list-info-level-char-pie">
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- /char-pie -->
-                    <!-- list subject-->
-                    <div class="card shadow-sm  mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold color-title">Danh sách môn xếp loại
-                            </h6>
-                            <select class="custom-select custom-select-sm color-title"
-                                style="width: 50%; font-weight: 500;" id="select-subject">
-
-                            </select>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body p-3" style="overflow-y:auto; max-height: 300px;">
-                            <table class="table table-borderless">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Môn học</th>
-                                        <th scope="col">Điểm</th>
-                                        <!-- <th scope="col">Handle</th> -->
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody-table-subject" style="overflow-y:auto;">
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="">
-                            <div class="text-center mb-2">
-                                <small class="heading-section text-secondary">Follow me</small>
-                            </div>
+    <div style="display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 20px;">
+        <h1>
+            Hiện tại Tính điểm IUH đã được cập nhật
+        </h1>
+        <span>
+            Ứng dụng vẫn chưa hoàn thiện và đang được cập nhật
+        </span>
+             Mong các bạn thông cảm
+             <span></span>
+        <span>Xin cảm ơn</span>
+        <br>
+          <div class="row justify-content-center">
                             <div class="row d-flex justify-content-between">
-                                <div class="col-2">
-                                    <a class="item-contact" target="_blank" style="color: #010101; "
-                                        href="https://www.tiktok.com/@sown_dev">
-                                        <img src="./logo/tik-tok.png" height="25" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-2">
+                                <div class="col-3">
                                     <a class="item-contact" target="_blank" style="color: #4267B2;"
                                         href="https://www.facebook.com/162001son/">
                                         <i class="fa-brands fa-facebook icon"></i>
                                     </a>
                                 </div>
-                                <div class="col-2">
+                                <div class="col-3">
                                     <a class="item-contact" target="_blank" style="color: #FF0000;"
                                         href="https://www.youtube.com/channel/UCsDgKKk7iBqBlCjJjlEScPg">
                                         <i class="fa-brands fa-youtube icon"></i>
                                     </a>
                                 </div>
 
-                                <div class="col-2">
+                                <div class="col-3">
                                     <a class="item-contact" style="color: #CE493C;"
                                         href="mailto:nguyenthanhson162001.com">
                                         <i class="fa-solid fa-at icon"></i>
                                     </a>
                                 </div>
-                                <div class="col-2">
-
+                                <div class="col-3">
                                     <a class="item-contact" target="_blank" style="color: #0A66C2;"
                                         href="https://www.linkedin.com/in/sowndev/">
                                         <i class="fa-brands fa-linkedin icon"></i>
@@ -185,156 +65,8 @@
 
 
                             </div>
-                        </div>
                     </div>
-                    <!-- /list subject-->
-                </div>
-
-                <div class=" tab-pane fade" id="nav-guide" role="tabpanel" aria-labelledby="nav-guide-tab">
-                    Sẽ sớm được cập nhật
-                </div>
-                <div class="tab-pane fade" id="nav-order" role="tabpanel" aria-labelledby="nav-order-tab">
-                    Sẽ sớm được cập nhật
-                </div>
-                <div class="tab-pane fade" id="nav-complaint" role="tabpanel" aria-labelledby="nav-complaint-tab">
-
-                    <div class="form-complaint ">
-
-                        <div class="row justify-content-center">
-                            <div class="col-lg-10 col-md-12">
-                                <div class="wrapper">
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-8 mb-5">
-                                            <div class="col-lg-8">
-                                                <div class="contact-wrap">
-                                                    <h4 class="mb-4 text-center">Phản hồi của bạn</h4>
-                                                    <div id="form-message-warning" class="mb-4 w-100 text-center"></div>
-                                                    <div id="form-message-success" class="mb-4 w-100 text-center">
-                                                        Giúp sản phẩm có thể được ngày càng hoàn thiện hơn
-                                                    </div>
-                                                    <form method="POST" id="complaint-form"
-                                                        action="https://complaint-to-son.herokuapp.com/complaint"
-                                                        name="complaint-form" class="complaint-form">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="form-control" name="name"
-                                                                        id="name" placeholder="Name" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <input type="email" class="form-control"
-                                                                        name="email" id="email" placeholder="Email"
-                                                                        required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="form-control"
-                                                                        name="subject" id="subject"
-                                                                        placeholder="Subject" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <textarea name="message" class="form-control"
-                                                                        id="message" cols="30" rows="8"
-                                                                        placeholder="Message" required></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <div class="form-group">
-                                                                    <input type="submit" value="Gửi phản hồi"
-                                                                        id="submit-complaint"
-                                                                        class="btn btn-info w-100">
-                                                                    <div class="submitting"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="">
-                                <div class="text-center mb-4">
-                                    <h6 class="heading-section">Hoặc phản hồi trực tiếp với tôi qua</h6>
-                                </div>
-                                <div class="row d-flex justify-content-between">
-                                    <div class="col-2">
-                                        <a class="item-contact" target="_blank" style="color: #010101; "
-                                            href="https://www.youtube.com/channel/UCsDgKKk7iBqBlCjJjlEScPg">
-                                            <img src="./logo/tik-tok.png" height="25" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="col-2">
-                                        <a class="item-contact" target="_blank" style="color: #4267B2;"
-                                            href="https://www.facebook.com/162001son/">
-                                            <i class="fa-brands fa-facebook icon"></i>
-                                        </a>
-                                    </div>
-                                    <div class="col-2">
-                                        <a class="item-contact" target="_blank" style="color: #FF0000;"
-                                            href="https://www.youtube.com/channel/UCsDgKKk7iBqBlCjJjlEScPg">
-                                            <i class="fa-brands fa-youtube icon"></i>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-2">
-                                        <a class="item-contact" style="color: #CE493C;"
-                                            href="mailto:nguyenthanhson162001.com">
-                                            <i class="fa-solid fa-at icon"></i>
-                                        </a>
-                                    </div>
-                                    <div class="col-2">
-
-                                        <a class="item-contact" target="_blank" style="color: #0A66C2;"
-                                            href="https://www.linkedin.com/in/sowndev/">
-                                            <i class="fa-brands fa-linkedin icon"></i>
-                                        </a>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-    </section>
-    <!-- Model -->
-    <div class="modal fade" id="modal-thank">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title text-success">Đã gửi phản hồi thành công</h4>
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                </div>
-
-                <!-- Modal body -->
-                <div class="modal-body text-center">
-                    Xin cảm ơn sự đóng góp của bạn !. Đây là điều sẽ khiến sản phẩm ngày càng được hoàn thiện hơn
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Thoát</button>
-                </div>
-
-            </div>
-        </div>
     </div>
-    <!-- /Model -->
-
 
     <script src="./js/jquery.min.js"></script>
     <script src="./js/complaint.js"></script>
