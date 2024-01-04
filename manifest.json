@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Tính điểm IUH",
     "description": "Tiện ích giúp cho sinh viên IUH có thể Nhập mới hoặc Chỉnh sửa các cột điểm TK, GK, TH hoặc Cuối kì để giả định kết quả cuối kỳ",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "action": {
         "default_popup": "./popup/index.html",
         "default_icon": "./logos/logo.png"
