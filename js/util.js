@@ -40,9 +40,9 @@ const convertGradeToNumber = (grade) => {
   return Number(String(grade).trim().replace(",", "."));
 };
 
-const convertGradeToNumberView = (grade) => {
+const convertGradeToNumberView = (grade, toFixed = 2) => {
   if (grade == undefined || isNaN(grade)) return "";
-  return String(Number(grade).toFixed(2)).trim().replace(".", ",");
+  return String(Number(grade).toFixed(toFixed)).trim().replace(".", ",");
 };
 const filterColumTheoryOrPracticals = (arrays) => {
   return arrays

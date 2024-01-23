@@ -1,22 +1,44 @@
-
-
-
 const addRowsOverview = () => {
-	const table = document.querySelector('table');
-	//  fer last rows tr of table 
-	const trs = table.querySelectorAll('tr');
-	const lastTr = trs[trs.length - 1];
+  addRowsOverviewForEachTerm();
+  const table = document.querySelector("table");
+  //  fer last rows tr of table
+  const trs = table.querySelectorAll("tr");
+  const lastTr = trs[trs.length - 1];
 
-	// get first td of last tr
-	const firstTd = lastTr.querySelector('td');
-	// get colspan of first td
-	const colspan = firstTd.getAttribute('colspan');
+  // get first td of last tr
+  const firstTd = lastTr.querySelector("td");
+  // get colspan of first td
+  const colspan = firstTd.getAttribute("colspan");
 
-	if(colspan == null || colspan == undefined) {
-		lastTr.insertAdjacentHTML("afterend", overviewHTML);
-		return;
-	}
-}
+  if (colspan == null || colspan == undefined) {
+    lastTr.insertAdjacentHTML("afterend", overviewHTML);
+    return;
+  }
+};
+
+const addRowsOverviewForEachTerm = () => {
+  const table = document.querySelector("table");
+  //  fer last rows tr of table
+  const trs = table.querySelectorAll("tr");
+
+  for (const tr of trs) {
+    const tdFirst = tr.querySelector("td:first-child");
+
+    if (tdFirst?.hasAttribute("colspan")) {
+      // label term name
+      if (tdFirst.textContent.trim().startsWith("HK")) {
+        const previousTr = tr.previousElementSibling;
+
+        if (!previousTr) continue;
+        const tdFirstOfPreviousTr = previousTr.querySelector("td:first-child");
+        if (!tdFirstOfPreviousTr?.hasAttribute("colspan")) {
+          listTermNameUpdate?.push(tdFirst.textContent.trim());
+          previousTr.insertAdjacentHTML("afterend", overviewHTML);
+        }
+      }
+    }
+  }
+};
 var overviewHTML = `
 <tr>
 
