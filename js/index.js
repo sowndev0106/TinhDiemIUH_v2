@@ -6,7 +6,7 @@ let grades = [];
 let listTermNameUpdate = [];
 (async () => {
   const status = localStorage.getItem("statusToolTinhDiem");
-  const isEnable =
+  let  isEnable =
     status == true || status == "true" || status == null || status == undefined;
 
   addToggleButton(isEnable);

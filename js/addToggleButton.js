@@ -1,105 +1,4 @@
 
-
-const addToggleButton = (status) => {
-	const style = document.createElement('style');
-	style.innerHTML = css;
-	document.head.appendChild(style);
-
-	const idExtention = chrome.runtime.id;
-	const captionElement = document.querySelector('.caption');
-	const portletTitle = document.querySelector('.portlet-title');
-
-	portletTitle.style.display = 'flex';
-	portletTitle.style.gap = '20px';
-	portletTitle.style.alignItems = 'center';
-
-	const button = document.createElement('div');
-	button.innerHTML = `
-    <nav style="background-color: #f3f7f9;    border-radius: 4px;">
-            <div style="display:flex;align-items: center; gap: 10px; margin: 5px ">
-                <div style="width: 40px; padding: 5px 3px 1px 3px" >
-                     ${logo}
-                </div>
-
-                <h5 style="color:#578ebe; font-weight:bold ;font-size: 14px;"> 
-                  Tính điểm IUH
-                </h5>
-                
-                <div id="tinhdiem-switch">
-                     <input type="checkbox" id="switch" ${status ? "checked" : ""} /><label for="switch">Toggle</label>
-                </div>
-            </div>
-        </nav>
-        `;
-
-	// add css for class switch
-	portletTitle.appendChild(button);
-
-	// add event for switch button
-	const switchButton = document.querySelector('#tinhdiem-switch #switch');
-	switchButton?.addEventListener('change', async (event) => {
-
-		localStorage.setItem("statusToolTinhDiem", event.target.checked);
-		// refresh page
-		location.reload();
-	})
-
-}
-`
-// <span id="msg-on-off-tinhdiem"
-                //     style="color: red;font-weight: 500; font-size: 16px;">
-                //     Đã tắt 😔
-                // </span>
-                `
-var css = `
-#tinhdiem-switch {
-    display: flex;
-    margin-right: 2px;
-}
-#tinhdiem-switch input[type=checkbox]{
-	height: 0;
-	width: 0;
-	visibility: hidden;
-}
-
-#tinhdiem-switch label {
-	cursor: pointer;
-	text-indent: -9999px;
-	width: 45px;
-	height: 25px;
-	background: grey;
-	display: block;
-	border-radius: 50px !important;
-	position: relative;
-}
-
-#tinhdiem-switch label:after {
-	content: '';
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	width: 15px;
-	height: 15px;
-	background: #fff;
-	border-radius: 90px;
-	transition: 0.3s;
-}
-
-#tinhdiem-switch input:checked + label {
-	background: #1da1f2;
-}
-
-#tinhdiem-switch input:checked + label:after {
-	left: calc(100% - 5px);
-	transform: translateX(-100%);
-}
-
-#tinhdiem-switch label:active:after {
-	width: 40px;
-}
-            `
-
-
 var logo = `
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	viewBox="0 0 128 128" enable-background="new 0 0 128 128" xml:space="preserve">
@@ -352,3 +251,114 @@ M24.376110,18.441803
 z"/>
 </svg>
 `
+
+const addToggleButton = (status) => {
+	const style = document.createElement('style');
+	style.innerHTML = css;
+	document.head.appendChild(style);
+
+	const idExtention = chrome.runtime.id;
+	const captionElement = document.querySelector('.caption');
+	const portletTitle = document.querySelector('.portlet-title');
+
+	portletTitle.style.display = 'flex';
+	portletTitle.style.gap = '20px';
+	portletTitle.style.alignItems = 'center';
+
+	const button = document.createElement('div');
+	button.innerHTML = `
+    <nav style="background-color: #f3f7f9;    border-radius: 4px;">
+            <div style="display:flex;align-items: center; gap: 10px; margin: 5px ">
+                <div style="width: 40px; padding: 5px 3px 1px 3px" >
+                     ${logo}
+                </div>
+
+                <h5 style="color:#578ebe; font-weight:bold ;font-size: 14px;"> 
+                  Tính điểm IUH
+                </h5>
+                
+             
+            </div>
+			<div  style="color: #FF0000; font-size:8px; text-align: center">Hiện tại do trang trường mới cập nhật nên ứng dụng đang bị lỗi. <div/>
+			<div  style="color: gray; font-size:8px; text-align: center">Ngày 14/10/2024 Ứng dụng sẽ được vá lỗi<div/>
+        </nav>
+        `;
+
+
+	// add css for class switch
+	portletTitle.appendChild(button);
+
+	// add event for switch button
+	const switchButton = document.querySelector('#tinhdiem-switch #switch');
+	switchButton?.addEventListener('change', async (event) => {
+
+		localStorage.setItem("statusToolTinhDiem", event.target.checked);
+		// refresh page
+		location.reload();
+	})
+
+}
+
+
+`
+<div id="tinhdiem-switch">
+		  <input type="checkbox" id="switch" ${status ? "checked" : ""} /><label for="switch">Toggle</label>
+	 </div>
+`
+
+
+`
+// <span id="msg-on-off-tinhdiem"
+                //     style="color: red;font-weight: 500; font-size: 16px;">
+                //     Đã tắt 😔
+                // </span>
+                `
+var css = `
+#tinhdiem-switch {
+    display: flex;
+    margin-right: 2px;
+}
+#tinhdiem-switch input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+#tinhdiem-switch label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 45px;
+	height: 25px;
+	background: grey;
+	display: block;
+	border-radius: 50px !important;
+	position: relative;
+}
+
+#tinhdiem-switch label:after {
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 15px;
+	height: 15px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+#tinhdiem-switch input:checked + label {
+	background: #1da1f2;
+}
+
+#tinhdiem-switch input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+#tinhdiem-switch label:active:after {
+	width: 40px;
+}
+            `
+
+

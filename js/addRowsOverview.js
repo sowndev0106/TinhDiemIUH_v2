@@ -1,16 +1,16 @@
 const addRowsOverview = () => {
   addRowsOverviewForEachTerm();
-  const table = document.querySelector("table");
+  const table = document.querySelector("#viewBangDiem table");
   //  fer last rows tr of table
   const trs = table.querySelectorAll("tr");
   const lastTr = trs[trs.length - 1];
-
-  // get first td of last tr
+  console.log(lastTr)
+  // // get first td of last tr
   const firstTd = lastTr.querySelector("td");
   // get colspan of first td
-  const colspan = firstTd.getAttribute("colspan");
+  const colspan = firstTd?.getAttribute("colspan");
 
-  if (colspan == null || colspan == undefined) {
+  if (!colspan) {
     lastTr.insertAdjacentHTML("afterend", overviewHTML);
     return;
   }
